@@ -1,8 +1,9 @@
 import time
 
+import allure
 from playwright.sync_api import Page
 
-class UserRolePage(Page):
+class UserRolePage:
     def __init__(self, page: Page):
         self.settings = page.locator("//i[@class='fa-solid fa-gear']")
         self.user_role = page.locator("//i[@class='fas fa-user']")
@@ -40,13 +41,14 @@ class UserRolePage(Page):
         self.prof_active.click()
         self.next_btn.click()
 
+
     def role(self):
         self.u_role.click()
         self.next_btn.click()
 
     def permission(self):
-        # self.u_permission.click() # provide permission manually
-        time.sleep(3)
+        self.u_permission.click() # provide permission manually
+        time.sleep(5)
         self.next_btn.click()
 
     def geo(self):
@@ -66,7 +68,10 @@ class UserRolePage(Page):
         self.summary_value = self.summary_value.strip()
         self.list_value = list_value.strip()
 
-        if self.summary_value != self.list_value:
-            print(f"❌ FAIL | Expected={self.summary_value}, Actual={self.list_value}")
-        else:
-            print(f"✅ PASS | Expected={self.summary_value}, Actual={self.list_value}")
+        assert self.summary_value == self.list_value, \
+            f"Mismatch! Expected={self.summary_value}, Actual={self.list_value}"
+
+        # if self.summary_value != self.list_value:
+        #     print(f"❌ FAIL | Expected={self.summary_value}, Actual={self.list_value}")
+        # else:
+        #     print(f"✅ PASS | Expected={self.summary_value}, Actual={self.list_value}")

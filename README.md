@@ -6,6 +6,18 @@ International Live Project of Save the children international (SCI) - Cash &amp;
 
     pytest -s .\tests\test_cva.py --headed
 
+### Command to run the project with report...
+
+    pytest -s .\tests\test_cva.py --headed --html=report.html --self-contained-html
+
+### Command to run the project with allure report...
+
+    pytest -v -s --alluredir="AllureReports/reports" .\tests\test_cva.py --headed
+
+### Run Allure Report (in Command Prompt(cmd))...
+
+    allure serve C:\Users\shah.newaj\PycharmProjects\Cash-Voucher-Activities-CVA-\AllureReports\reports
+
 ### Used Packages in this Project...
 
 pip	26.0.1
