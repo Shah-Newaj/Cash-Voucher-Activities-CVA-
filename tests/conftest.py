@@ -5,9 +5,6 @@ import pytest
 import allure
 from playwright.sync_api import sync_playwright
 
-import os
-import allure
-import pytest
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
@@ -15,32 +12,40 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     rep = outcome.get_result()
 
-    if rep.when == "call":
+    page = item.funcargs.get("page", None)
 
-        page = item.funcargs.get("page", None)
+    # ---------------- SCREENSHOT ----------------
+    if rep.when == "call" and rep.failed:
 
         if page:
+            screenshot = page.screenshot()
 
-            # ---------------- SCREENSHOT ----------------
-            if rep.failed:
-                screenshot = page.screenshot()
+            allure.attach(
+                screenshot,
+                name="failure-screenshot",
+                attachment_type=allure.attachment_type.PNG
+            )
 
-                allure.attach(
-                    screenshot,
-                    name="failure-screenshot",
-                    attachment_type=allure.attachment_type.PNG
-                )
+    # ---------------- SAVE VIDEO PATH ----------------
+    if rep.when == "call" and page and page.video:
 
-            # ---------------- VIDEO ----------------
-            video_path = page.video.path()
+        item.video_path = page.video.path()
 
-            if os.path.exists(video_path):
+    # ---------------- ATTACH FINALIZED VIDEO ----------------
+    if rep.when == "teardown":
 
-                allure.attach.file(
-                    video_path,
-                    name="execution-video",
-                    attachment_type=allure.attachment_type.WEBM
-                )
+        video_path = getattr(item, "video_path", None)
+
+        if video_path and os.path.exists(video_path):
+
+            # 🔥 Wait for Playwright encoding finalize
+            time.sleep(3)
+
+            allure.attach.file(
+                video_path,
+                name=f"{item.name}-video",
+                attachment_type=allure.attachment_type.WEBM
+            )
 
 @pytest.fixture(scope="function")
 def page():
