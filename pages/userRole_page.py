@@ -47,7 +47,7 @@ class UserRolePage:
         self.next_btn.click()
 
     def permission(self):
-        # self.u_permission.click() # provide permission manually
+        self.u_permission.click() # provide permission manually
         time.sleep(5)
         self.next_btn.click()
 
