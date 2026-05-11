@@ -1,3 +1,4 @@
+import os
 import time
 
 import allure
@@ -5,6 +6,7 @@ from playwright.sync_api import Page
 
 class UserRolePage:
     def __init__(self, page: Page):
+        self.page = page
         self.settings = page.locator("//i[@class='fa-solid fa-gear']")
         self.user_role = page.locator("//i[@class='fas fa-user']")
         self.add_btn = page.get_by_role("button", name="Add")
@@ -27,27 +29,39 @@ class UserRolePage:
         self.sum_container = page.locator("//div[contains(@title,'Selected UI Permissions')]")
         self.finish_btn = page.get_by_role("button", name="Finish")
         # ---------------------------------------- User Role Dashboard ----------------------------------------
-        self.list_container = page.locator("//tr[td[contains(.,'Shah Newaj')]]/td[6]")
+        # self.list_container = page.locator("//tr[td[contains(.,'Shah Newaj')]]/td[6]")
+        # ---------------------------------------- User Profile Picture ------------------------------------------
+        self.profile_upload = page.locator("input[type='file']")
 
 
-    def profile(self):
+    def profile(self, full_name, username, email, phone, image_path):
+        absolute_path = os.path.abspath(image_path)
+
         self.settings.click()
         self.user_role.click()
         self.add_btn.click()
-        self.prof_name.fill("Shah Newaj")
-        self.prof_username.fill("Newaj")
-        self.prof_email.fill("test@gmail.com")
-        self.prof_phone.fill("012345678")
+        self.prof_name.fill(full_name)
+        self.prof_username.fill(username)
+        self.prof_email.fill(email)
+        self.prof_phone.fill(phone)
+        # Upload image
+        # self.profile_upload.set_input_files(absolute_path)
+        # self.profile_upload.set_input_files(image_path)
         self.prof_active.click()
         self.next_btn.click()
+        print(image_path)
 
+    def role(self, role_name):
+        role_locator = self.page.locator(
+            f"//div[normalize-space()='{role_name}']"
+        )
 
-    def role(self):
-        self.u_role.click()
+        role_locator.click()
+
         self.next_btn.click()
 
     def permission(self):
-        self.u_permission.click() # provide permission manually
+        # self.u_permission.click() # provide permission manually
         time.sleep(5)
         self.next_btn.click()
 
@@ -62,9 +76,13 @@ class UserRolePage:
         self.finish_btn.click()
         time.sleep(5)
 
-    def dashboard(self):
-        list_value = self.list_container.inner_text()
-        #  Removing white space
+    def dashboard(self, full_name):
+        list_container = self.page.locator(
+            f"//tr[td[contains(.,'{full_name}')]]/td[6]"
+        )
+
+        list_value = list_container.inner_text()
+
         self.summary_value = self.summary_value.strip()
         self.list_value = list_value.strip()
 
