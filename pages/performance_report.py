@@ -28,7 +28,8 @@ class PerformanceReport:
             "Login": 5,
             "Select Country": 3,
             "Select Project": 3,
-            "Create Beneficiary List": 15
+            "Create Beneficiary List": 15,
+            "Approve Beneficiary List": 10
         }
 
     def start(self):
