@@ -108,11 +108,21 @@ def test_cva_happy_path(page):
 
     time.sleep(10)
 
-    locator = page.locator(f"//td[normalize-space()='{beneficiary_list_id}']")
+    page.locator("//input[@placeholder='Search']").fill(beneficiary_list_id)
 
-    locator.wait_for(state="visible")
+    page.keyboard.press("Enter")
 
-    locator.click()
+    row = page.locator(f"//td[normalize-space()='{beneficiary_list_id}']")
+
+    row.wait_for(state="visible")
+
+    row.click()
+
+    # locator = page.locator(f"//td[normalize-space()='{beneficiary_list_id}']")
+    #
+    # locator.wait_for(state="visible")
+    #
+    # locator.click()
 
     time.sleep(10)
     page.locator("//span[normalize-space()='Approve']").click()
