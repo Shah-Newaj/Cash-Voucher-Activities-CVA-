@@ -1,6 +1,88 @@
-# Cash-Voucher-Activities-CVA-
-International Live Project of Save the children international (SCI) - Cash &amp; Voucher Activities(CVA Web App 3) automation using Pytest, Python and Playwright
+# Cash Voucher Activities (CVA) Automation Framework
+International Live Project of Save the children international (SCI). 
+A robust end-to-end test automation framework for the Cash Voucher Activities (CVA) 
+application developed using Python, Playwright, and Pytest. The framework follows 
+the Page Object Model (POM) architecture to ensure maintainability, scalability, and 
+reusable test components.
 
+# Key Features
+## Functional Automation
+End-to-end automation of CVA business workflows
+* Page Object Model (POM) architecture
+* Pytest-based test execution
+* Data-driven testing using Excel
+* Dynamic test data management
+* Reusable page objects and utility methods
+* Reliable Playwright locator strategy
+
+## User Creation Automation
+* Automated user creation using Excel test data
+* Supports multiple user records through data-driven execution
+* Reduces manual effort and simplifies test maintenance
+
+## Reporting
+* Allure Report integration
+* Automatic screenshot capture on failures
+* Video recording attachment for test execution
+* Detailed execution logs
+* Rich test execution reporting
+
+## Feature-wise Performance Report
+A custom HTML performance dashboard that measures the execution time of 
+each business feature during an end-to-end workflow.
+
+The report includes:
+
+* Application information
+* Environment details
+* Country and Project information
+* Total execution time
+* Average response time
+* Feature-wise execution time
+* PASS/FAIL summary
+* Interactive Bar Chart
+* PASS/FAIL Pie Chart
+* Fastest and Slowest feature summary
+
+## Automated Business Flow
+
+Current Happy Path automation covers:
+* User Login
+* Country Selection
+* Project Selection
+* Beneficiary List Creation
+* Send Beneficiary List for Approval
+* Beneficiary List Approval
+
+Each business feature is individually timed and included in the performance dashboard.
+
+## Technology Stack
+* Python
+* Playwright
+* Pytest
+* Allure Report
+* HTML5
+* CSS3
+* OpenPyXL (Excel data handling)
+* Page Object Model (POM)
+
+## Framework Highlights
+* Data-driven testing with Excel
+* Modular Page Object Model architecture
+* Custom feature-level performance reporting
+* Allure reporting with video attachments
+* Reusable and maintainable framework
+* Enterprise-ready automation structure
+* Easy CI/CD integration
+
+## Future Enhancements
+* API automation integration
+* Database validation
+* Cross-browser execution
+* Parallel test execution
+* Performance trend comparison across executions
+* Automatic PDF report generation
+* CI/CD pipeline integration
 
 ### Command to run the project...
 
