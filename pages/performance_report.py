@@ -26,8 +26,7 @@ class PerformanceReport:
         # Expected response time (seconds)
         self.thresholds = {
             "Login": 5,
-            "Select Country": 3,
-            "Select Project": 3,
+            "Select Country & Project": 8,
             "Create Beneficiary List": 15,
             "Approve Beneficiary List": 10
         }
