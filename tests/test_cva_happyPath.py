@@ -3,9 +3,11 @@ from os import name
 
 import pytest
 
+
 from pages.beneficiaryList_page import BeneficiaryListPage
 from pages.dashboard_page import Dashboard
 from pages.login_page import LoginPage
+from pages.paymentList_page import PaymentListPage
 from pages.performance_report import PerformanceReport
 
 def test_cva_happy_path(page):
@@ -20,6 +22,7 @@ def test_cva_happy_path(page):
     login = LoginPage(page)
     dashboard = Dashboard(page)
     beneficiary = BeneficiaryListPage(page)
+    payment = PaymentListPage(page)
 
     # Login
     t = report.start()
@@ -52,35 +55,14 @@ def test_cva_happy_path(page):
 
     # Approve Beneficiary List
     t = report.start()
-
-    page.get_by_role("link", name="Beneficiary List Approval").click()
-
-    time.sleep(5)
-
-    page.locator("//input[@placeholder='Search']").fill(beneficiary_list_id)
-    page.keyboard.press("Enter")
-    time.sleep(5)
-    row = page.locator("//tbody//tr//td[2]")
-    row.wait_for(state="visible")
-    row.click()
-
-    # locator = page.locator(f"//td[normalize-space()='{beneficiary_list_id}']")
-    # locator = page.getByRole('link', name="AdminUAT1/UN OC/test/12Jul20/beneficiary_list_id")
-    # locator.wait_for(state="visible")
-    # locator.click()
-
-    time.sleep(10)
-    approve_btn = page.locator("//span[normalize-space()='Approve']")
-    approve_btn.click()
-
-    page.wait_for_load_state("networkidle")
-    # time.sleep(10)
-
+    beneficiary.approve_beneficiary(beneficiary_list_id)
     report.stop("Approve Beneficiary List", t)
 
     # ------------------------------------------------------------------------------------------------------------
 
-
+    payment_list_id = payment.create_payment(beneficiary_list_id)
+    print("Payment List ID: ", payment_list_id)
+    payment.approve_payment(payment_list_id)
 
     # ----------------------------------------------------------------------------------------------------------
 

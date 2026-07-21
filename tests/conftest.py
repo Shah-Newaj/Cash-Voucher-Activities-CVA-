@@ -65,3 +65,4 @@ def page():
         page.close()
         context.close()
         browser.close()
+

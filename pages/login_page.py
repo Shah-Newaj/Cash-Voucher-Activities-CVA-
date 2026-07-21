@@ -8,7 +8,7 @@ class LoginPage:
         self.login_btn = page.get_by_role("button", name="Login")
 
     def load(self):
-        self.page.goto("https://cashapp-test.savethechildren.net/")
+        self.page.goto("https://cashapp.savethechildren.net/")
 
     def login(self, user, pwd):
         self.username.fill(user)
