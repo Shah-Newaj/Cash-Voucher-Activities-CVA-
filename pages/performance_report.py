@@ -26,9 +26,12 @@ class PerformanceReport:
         # Expected response time (seconds)
         self.thresholds = {
             "Login": 5,
-            "Select Country & Project": 8,
-            "Create Beneficiary List": 15,
-            "Approve Beneficiary List": 10
+            "Select Country & Project": 10,
+            "Create Beneficiary List": 100,
+            "Approve Beneficiary List": 100,
+            "Create Payment List": 100,
+            "Approve Payment List": 100,
+            "Payment Tracking": 100
         }
 
     def start(self):

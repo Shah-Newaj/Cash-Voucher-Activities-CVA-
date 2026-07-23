@@ -13,8 +13,8 @@ from pages.performance_report import PerformanceReport
 def test_cva_happy_path(page):
     report = PerformanceReport(
         application="CashApp",
-        environment="TEST",
-        url="https://cashapp-test.savethechildren.net/",
+        environment="Prod",
+        url="https://cashapp.savethechildren.net/",
         country="Cashland",
         project="AdminUAT1",
         browser="Chromium"
@@ -59,12 +59,20 @@ def test_cva_happy_path(page):
     report.stop("Approve Beneficiary List", t)
 
     # ------------------------------------------------------------------------------------------------------------
-
+    t = report.start()
     payment_list_id = payment.create_payment(beneficiary_list_id)
     print("Payment List ID: ", payment_list_id)
-    payment.approve_payment(payment_list_id)
+    report.stop("Create Payment List", t)
 
-    # ----------------------------------------------------------------------------------------------------------
+    t = report.start()
+    payment.approve_payment(payment_list_id)
+    report.stop("Approve Payment List", t)
+
+    t = report.start()
+    payment.payment_tracking(payment_list_id)
+    report.stop("Payment Tracking", t)
+
+    # ------------------------------------------------------------------------------------------------------------
 
     # Generating Performance Report
     report.generate_html()

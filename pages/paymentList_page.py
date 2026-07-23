@@ -37,6 +37,14 @@ class PaymentListPage:
         self.payment_search = page.locator("//input[@placeholder='Search']")
         self.approve_btn = page.get_by_role("button", name="Approve")
 
+        self.payment_tracking_overview = page.get_by_role("link", name="Payment Tracking Overview")
+        self.update_payment_status_drp = page.locator("//span[normalize-space()='Select']")
+        self.update_payment_status = page.locator("//div[contains(text(),'Successful')]")
+        self.save_record_transfer_btn = page.get_by_role("button", name="Save & Record Transfer")
+        self.receive_transfer_amount = page.locator("//div[contains(text(),'Yes')]")
+        self.transfer_made_date_picker = page.locator("//div[text()='What date was the transfer made']/following-sibling::div[contains(@class,'datepicker-rf')]")
+        self.transfer_made_date = page.locator("//div[contains(@class,'datepicker-rf')]//input[contains(@type,'text')]")
+
 
     def create_payment(self, beneficiary_list_id):
         print(f"Received ID: {beneficiary_list_id}")
@@ -104,5 +112,41 @@ class PaymentListPage:
         self.approve_btn.click()
         self.page.wait_for_url("https://cashapp.savethechildren.net/PaymentListApproval")
         self.page.wait_for_load_state("networkidle")
+
+
+    def payment_tracking(self, payment_list_id):
+        print(f"Received ID: {payment_list_id}")
+        self.paymentlist.click()
+        self.payment_tracking_overview.click()
+        self.page.wait_for_timeout(5000)
+        self.payment_search.fill(payment_list_id)
+        self.payment_search.press("Enter")
+        self.page.wait_for_timeout(5000)
+        row = self.page.locator("//tbody//tr//td[3]")
+        row.wait_for(state="visible")
+        row.click()
+
+        self.select_all_checkbox.click()
+        self.page.wait_for_timeout(3000)
+        self.update_payment_status_drp.click()
+        self.page.wait_for_timeout(2000)
+        self.update_payment_status.click()
+        self.page.wait_for_timeout(2000)
+        self.transfer_made_date_picker.click()
+        self.page.wait_for_timeout(2000)
+        self.page.locator(".datepicker-popup-rf tbody td").get_by_text("20", exact=True).click()
+        self.page.wait_for_timeout(2000)
+        self.update_payment_status_drp.click()
+        self.page.wait_for_timeout(2000)
+        self.receive_transfer_amount.click()
+        self.page.wait_for_timeout(2000)
+        self.apply_to_selected_btn.click()
+        self.page.wait_for_timeout(10000)
+        self.save_record_transfer_btn.click()
+        self.page.wait_for_timeout(10000)
+        self.page.wait_for_url("https://cashapp.savethechildren.net/PaymentTrackingOverview")
+
+
+
 
 
