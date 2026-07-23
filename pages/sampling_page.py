@@ -32,7 +32,9 @@ class SamplingPage:
     def create_sample(self, beneficiary_list_id):
         print(f"Received ID: {beneficiary_list_id}")
         self.sampling.click()
+        self.page.wait_for_timeout(1000)
         self.sample_report_overview.click()
+        self.page.wait_for_timeout(1000)
         self.create_btn.click()
         self.page.wait_for_timeout(3000)
         self.sample_name_text.fill(self.sample_name)
