@@ -1,3 +1,6 @@
+
+from datetime import datetime
+
 from playwright.sync_api import Page
 import time
 from playwright.sync_api import expect
@@ -7,6 +10,7 @@ class SamplingPage:
         self.page = page
         self.sampling = page.get_by_text("Sampling Management")
         self.sample_report_overview = page.get_by_role("link", name="Sample Report Overview")
+        self.sample_report_approval = page.get_by_role("link", name="Sample Report Approval")
         self.create_btn = page.get_by_role("button", name="Create New Sample")
         self.sample_name_text = page.locator("//div[@class='input-group']//div[@class='input-rf']//input[@type='text']")
         self.survey_type_drp = page.locator("//span[normalize-space()='Select Survey Type']")
@@ -20,6 +24,9 @@ class SamplingPage:
         self.input_sample_size = page.locator("//div[contains(text(),'Percentage (%)')]")
         self.generate_sample_btn = page.get_by_role("button", name="Generate Random Sample")
         self.sendlist_for_approval_btn = page.get_by_role("button", name="Send List for Approval")
+        self.sample_search = page.locator("//input[@placeholder='Search']")
+        self.approve_btn = page.get_by_role("button", name="Approve")
+        self.sample_name = f"Test Sample {datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
 
     def create_sample(self, beneficiary_list_id):
@@ -28,7 +35,7 @@ class SamplingPage:
         self.sample_report_overview.click()
         self.create_btn.click()
         self.page.wait_for_timeout(3000)
-        self.sample_name_text.fill("Test Sample")
+        self.sample_name_text.fill(self.sample_name)
         self.page.wait_for_timeout(3000)
         self.survey_type_drp.click()
         self.page.wait_for_timeout(3000)
@@ -57,5 +64,18 @@ class SamplingPage:
 
 
 
-    def approve_sample(self, payment_list_id):
-        print(f"Received ID: {payment_list_id}")
+    def approve_sample(self):
+        self.sample_report_approval.click()
+        self.page.wait_for_timeout(3000)
+        self.sample_search.fill(self.sample_name)
+        self.sample_search.press("Enter")
+        self.page.wait_for_timeout(3000)
+        row = self.page.locator("//tbody/tr[1]/td[1]")
+        row.wait_for(state="visible")
+        row.click()
+        self.page.wait_for_timeout(5000)
+        self.approve_btn.click()
+        self.page.wait_for_timeout(7000)
+        self.page.wait_for_url("https://cashapp.savethechildren.net/SampleReportApproval")
+
+

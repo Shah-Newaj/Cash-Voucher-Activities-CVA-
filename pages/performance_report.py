@@ -31,7 +31,9 @@ class PerformanceReport:
             "Approve Beneficiary List": 100,
             "Create Payment List": 100,
             "Approve Payment List": 100,
-            "Payment Tracking": 100
+            "Payment Tracking": 100,
+            "Create Sample": 100,
+            "Approve Sample": 100
         }
 
     def start(self):

@@ -39,10 +39,10 @@ class BeneficiaryListPage:
     def approve_beneficiary(self, beneficiary_list_id):
         print(f"Received ID: {beneficiary_list_id}")
         self.benef_list_approval.click()
-        self.page.wait_for_timeout(5000)
+        self.page.wait_for_timeout(3000)
         self.benef_search.fill(beneficiary_list_id)
         self.benef_search.press("Enter")
-        self.page.wait_for_timeout(5000)
+        self.page.wait_for_timeout(3000)
         row = self.page.locator("//tbody//tr//td[2]")
         row.wait_for(state="visible")
         row.click()

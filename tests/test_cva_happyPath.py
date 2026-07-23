@@ -9,6 +9,8 @@ from pages.dashboard_page import Dashboard
 from pages.login_page import LoginPage
 from pages.paymentList_page import PaymentListPage
 from pages.performance_report import PerformanceReport
+from pages.sampling_page import SamplingPage
+
 
 def test_cva_happy_path(page):
     report = PerformanceReport(
@@ -23,6 +25,7 @@ def test_cva_happy_path(page):
     dashboard = Dashboard(page)
     beneficiary = BeneficiaryListPage(page)
     payment = PaymentListPage(page)
+    sampling = SamplingPage(page)
 
     # Login
     t = report.start()
@@ -34,9 +37,9 @@ def test_cva_happy_path(page):
 
     # Country & Project Selection
     t = report.start()
-    page.wait_for_timeout(3000)
+    page.wait_for_timeout(1000)
     dashboard.select_country()
-    page.wait_for_timeout(3000)
+    page.wait_for_timeout(1000)
     dashboard.select_project()
     page.wait_for_load_state("networkidle")
     report.stop("Select Country & Project", t)
@@ -71,6 +74,16 @@ def test_cva_happy_path(page):
     t = report.start()
     payment.payment_tracking(payment_list_id)
     report.stop("Payment Tracking", t)
+
+    # ------------------------------------------------------------------------------------------------------------
+    t = report.start()
+    sampling.create_sample(beneficiary_list_id)
+    report.stop("Create Sample", t)
+
+    t = report.start()
+    sampling.approve_sample()
+    report.stop("Approve Sample", t)
+
 
     # ------------------------------------------------------------------------------------------------------------
 

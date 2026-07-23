@@ -16,5 +16,6 @@ def test_cva_sampling(page):
     dashboard.select_country()
     page.wait_for_timeout(3000)
     dashboard.select_project()
-    beneficiary_list_id = "MSQTX2L5"
+    beneficiary_list_id = "MSQTX2L5" # this is dumy, in happy path it will come from beneficiary module
     sampling.create_sample(beneficiary_list_id)
+    sampling.approve_sample()
