@@ -52,7 +52,7 @@ class PaymentListPage:
         self.paymentlist.click()
         self.paymentlist_overview.click()
         self.create_btn.click()
-        self.page.wait_for_timeout(5000)
+        self.page.wait_for_timeout(5000) #under 5 seconds it's not working
         self.location3_drp.click()
         self.page.wait_for_timeout(3000)
         self.location3.click()
@@ -89,7 +89,7 @@ class PaymentListPage:
         self.select_all_checkbox.click()
         self.page.wait_for_timeout(3000)
         self.apply_to_selected_btn.click()
-        self.page.wait_for_timeout(5000)
+        self.page.wait_for_timeout(10000) #otherwise it's not working
         self.page.wait_for_load_state("networkidle")
         self.sendlist_for_approval_btn.click()
         self.page.wait_for_timeout(5000)
