@@ -9,7 +9,8 @@ class PaymentListPage:
         self.paymentlist_overview = page.get_by_role("link", name="Payment List Overview")
         self.create_btn = page.get_by_role("button", name="Create New Payment List")
         self.location3_drp = page.locator("//div[@class='select-rf-viewer False']//span[contains(text(),'Select')]")
-        self.location3 = page.locator(".select-rf-popper").get_by_text("District4", exact=True) #change Location name here if required
+        # self.location3 = page.locator(".select-rf-popper").get_by_text("Bosso", exact=True) #change Location name here if required
+        self.location3 = page.locator("//div[@class='select-rf-popper True']//div[2]//div[1]")
         self.beneficiarylist_drop = page.locator("//div[@class='multiselect-rf-viewer False']//span[contains(text(),'Select')]")
         # self.beneficiarylist = page.locator(".select-rf-popper").get_by_text("AdminUAT1/UN OC/Test Location 2/09Jul20/C1SPDRUC", exact=True) #change Beneficiary name here if required
         self.beneficiarylist = page.locator("//div[contains(text(),'AdminUAT1/UN OC/Test Location 2/09Jul20/C1SPDRUC')]")
@@ -17,13 +18,17 @@ class PaymentListPage:
         self.assign_pymnt_btn = page.get_by_role("button", name="Assign Payments")
 
         self.cva_type_drp = page.locator("div[id$='-SetTransferDetailsComponent-CVAType']")
-        self.cva_type = page.locator("//div[contains(text(),'cash_for_work')]")
+        # self.cva_type = page.locator("//div[contains(text(),'mpca')]")
+        self.cva_type = page.locator("(//div[@class='select-rf-popper-item-text'])[1]")
         self.currency_transfer_drp = page.locator("div[id$='-SetTransferDetailsComponent-CurrencyOfTransfer']")
-        self.currency_transfer = page.locator("//div[contains(text(),'US Dollar')]")
+        # self.currency_transfer = page.locator("//div[contains(text(),'US Dollar')]")
+        self.currency_transfer = page.locator("(//div[@class='select-rf-popper-item-text'])[1]")
         self.financial_service_drp = page.locator("div[id$='-SetTransferDetailsComponent-FinancialServiceProvider']")
-        self.financial_service = page.locator("//div[contains(text(),'Test Bank')]")
+        # self.financial_service = page.locator("//div[contains(text(),'Test Bank')]")
+        self.financial_service = page.locator("(//div[@class='select-rf-popper-item-text'])[1]")
         self.delivery_mecha_drp = page.locator("div[id$='-SetTransferDetailsComponent-PaymentModality']")
-        self.delivery_mecha = page.locator("//div[contains(text(),'Mobile money')]")
+        # self.delivery_mecha = page.locator("//div[contains(text(),'Mobile money')]")
+        self.delivery_mecha = page.locator("(//div[@class='select-rf-popper-item-text'])[1]")
         self.exp_transfer_date_picker = page.locator("//div[text()='Expected Transfer Date']/following-sibling::div[contains(@class,'datepicker-rf')]")
         self.exp_transfer_date = page.locator("//div[contains(@class,'datepicker-rf')]//input[contains(@type,'text')]")
         self.transfer_value_text = page.locator("//div[text()='Transfer Value']/following-sibling::div[contains(@class,'input-rf')]//input")
@@ -99,6 +104,7 @@ class PaymentListPage:
 
     def approve_payment(self, payment_list_id):
         print(f"Received ID: {payment_list_id}")
+        self.paymentlist.click()
         self.payment_list_approval.click()
         self.page.wait_for_timeout(5000)
         self.payment_search.fill(payment_list_id)
@@ -112,6 +118,7 @@ class PaymentListPage:
         self.approve_btn.click()
         self.page.wait_for_url("https://cashapp.savethechildren.net/PaymentListApproval")
         self.page.wait_for_load_state("networkidle")
+        self.page.wait_for_timeout(10000)
 
 
     def payment_tracking(self, payment_list_id):

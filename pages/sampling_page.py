@@ -55,6 +55,7 @@ class SamplingPage:
         self.input_sample_size_drp.click()
         self.page.wait_for_timeout(3000)
         self.input_sample_size.click()
+        self.page.wait_for_timeout(3000)
         self.generate_sample_btn.click()
         self.page.wait_for_timeout(3000)
         self.sendlist_for_approval_btn.click()
@@ -67,6 +68,7 @@ class SamplingPage:
 
 
     def approve_sample(self):
+        self.sampling.click()
         self.sample_report_approval.click()
         self.page.wait_for_timeout(3000)
         self.sample_search.fill(self.sample_name)
@@ -77,7 +79,8 @@ class SamplingPage:
         row.click()
         self.page.wait_for_timeout(5000)
         self.approve_btn.click()
-        self.page.wait_for_timeout(7000)
         self.page.wait_for_url("https://cashapp.savethechildren.net/SampleReportApproval")
+        self.page.wait_for_load_state("networkidle")
+        self.page.wait_for_timeout(10000)
 
 

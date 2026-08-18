@@ -16,7 +16,7 @@ class BeneficiaryListPage:
 
         self.benef_list_approval = page.get_by_role("link", name="Beneficiary List Approval")
         self.benef_search = page.locator("//input[@placeholder='Search']")
-        self.approve_btn = page.locator("//span[normalize-space()='Approve']")
+        self.approve_btn = page.locator("//button[normalize-space()='Approve']")
 
     def create_beneficiary(self, location_text):
         self.beneficiarylist.click()
@@ -38,6 +38,7 @@ class BeneficiaryListPage:
 
     def approve_beneficiary(self, beneficiary_list_id):
         print(f"Received ID: {beneficiary_list_id}")
+        self.beneficiarylist.click()
         self.benef_list_approval.click()
         self.page.wait_for_timeout(3000)
         self.benef_search.fill(beneficiary_list_id)
@@ -50,6 +51,6 @@ class BeneficiaryListPage:
         self.page.wait_for_timeout(5000)
         self.approve_btn.click()
         self.page.wait_for_url("https://cashapp.savethechildren.net/BeneficiaryListApproval")
-        # self.page.wait_for_load_state("networkidle")
-        # self.page.wait_for_timeout(10000)
+        self.page.wait_for_load_state("networkidle")
+        self.page.wait_for_timeout(10000)
 

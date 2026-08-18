@@ -18,4 +18,7 @@ def test_cva_sampling(page):
     dashboard.select_project()
     beneficiary_list_id = "MSQTX2L5" # this is dumy, in happy path it will come from beneficiary module
     sampling.create_sample(beneficiary_list_id)
+    login.logout()
+
+    login.login2("shah.ca", "WelcomeCVA@2026")
     sampling.approve_sample()

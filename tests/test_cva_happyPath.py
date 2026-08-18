@@ -30,6 +30,7 @@ def test_cva_happy_path(page):
     # Login
     t = report.start()
     login.load()
+
     login.login("SuperAdmin", "Welcome@2")
     report.stop("Login", t)
 
@@ -51,26 +52,33 @@ def test_cva_happy_path(page):
 
     beneficiary_list_id = beneficiary.create_beneficiary("test")
     print("Beneficiary List ID: ", beneficiary_list_id)
-
+    login.logout()
     report.stop("Create Beneficiary List", t)
 
     # ------------------------------------------------------------------------------------------------------------
 
     # Approve Beneficiary List
     t = report.start()
+    login.login2("shah.ca", "WelcomeCVA@2026")
     beneficiary.approve_beneficiary(beneficiary_list_id)
     report.stop("Approve Beneficiary List", t)
 
     # ------------------------------------------------------------------------------------------------------------
+
+    # Create Payment List
     t = report.start()
     payment_list_id = payment.create_payment(beneficiary_list_id)
     print("Payment List ID: ", payment_list_id)
+    login.logout()
     report.stop("Create Payment List", t)
 
+    # Approve Payment List
     t = report.start()
+    login.login("SuperAdmin", "Welcome@2")
     payment.approve_payment(payment_list_id)
     report.stop("Approve Payment List", t)
 
+    # Payment Tracking
     t = report.start()
     payment.payment_tracking(payment_list_id)
     report.stop("Payment Tracking", t)
@@ -78,9 +86,11 @@ def test_cva_happy_path(page):
     # ------------------------------------------------------------------------------------------------------------
     t = report.start()
     sampling.create_sample(beneficiary_list_id)
+    login.logout()
     report.stop("Create Sample", t)
 
     t = report.start()
+    login.login2("shah.ca", "WelcomeCVA@2026")
     sampling.approve_sample()
     report.stop("Approve Sample", t)
 
