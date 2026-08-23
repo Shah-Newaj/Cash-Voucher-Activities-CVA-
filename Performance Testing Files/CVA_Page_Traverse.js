@@ -13,11 +13,25 @@ const BASE_URL = __ENV.BASE_URL || 'https://cashapp.savethechildren.net/'
 const USERNAME = 'SuperAdmin'
 const PASSWORD = 'Welcome@2'
 
+// Stress Testing Scenario
 export const options = {
     stages: [
+        { duration: '1m', target: 50 },
         { duration: '1m', target: 100 },
-        { duration: '2m', target: 200 },
+        { duration: '1m', target: 200 },
+        { duration: '1m', target: 300 },
+        { duration: '1m', target: 400 },
+        { duration: '1m', target: 500 },
+        { duration: '5m', target: 500 },
         { duration: '1m', target: 0 }
+
+        // { duration: '1m', target: 50 },
+        // { duration: '1m', target: 100 },
+        // { duration: '1m', target: 150 },
+        // { duration: '1m', target: 200 },
+        // { duration: '5m', target: 200 },
+        // { duration: '1m', target: 0 }
+
 
     ],
 
@@ -54,10 +68,13 @@ export default function () {
             }
         );
 
+
         check(loginResponse, {
-            'Login Successful': (r) =>
-                r.status === 200,
+            [`Login Response | ${loginResponse.status} | ${loginResponse.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
+
 
     });
 
@@ -70,9 +87,11 @@ export default function () {
             `${BASE_URL}/BeneficiaryListOverView`
         );
 
+
         check(response, {
-            'Beneficiary List Overview Page Loaded': (r) =>
-                r.status === 200,
+            [`Beneficiary List OverView Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
@@ -86,9 +105,11 @@ export default function () {
             `${BASE_URL}/BeneficiaryListApproval`
         );
 
+
         check(response, {
-            'Beneficiary List Approval Page Loaded': (r) =>
-                r.status === 200,
+            [`Beneficiary List Approval Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
@@ -101,9 +122,11 @@ export default function () {
             `${BASE_URL}/PaymentListOverView`
         );
 
+
         check(response, {
-            'Payment List Overview Page Loaded': (r) =>
-                r.status === 200,
+            [`Payment List OverView Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
@@ -117,9 +140,11 @@ export default function () {
             `${BASE_URL}/PaymentListApproval`
         );
 
+
         check(response, {
-            'Payment List Approval Page Loaded': (r) =>
-                r.status === 200,
+            [`Payment List Approval Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
@@ -133,8 +158,9 @@ export default function () {
         );
 
         check(response, {
-            'Payment Tracking Overview Page Loaded': (r) =>
-                r.status === 200,
+            [`Payment Tracking Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
@@ -148,8 +174,9 @@ export default function () {
         );
 
         check(response, {
-            'Sample Report Overview Page Loaded': (r) =>
-                r.status === 200,
+            [`Sample Report OverView Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
@@ -164,8 +191,9 @@ export default function () {
         );
 
         check(response, {
-            'Sample Report Approval Page Loaded': (r) =>
-                r.status === 200,
+            [`Sample Report Approval Response | ${response.status} | ${response.status_text}`]: (r) => {
+                return r.status === 200;
+            },
         });
 
     });
