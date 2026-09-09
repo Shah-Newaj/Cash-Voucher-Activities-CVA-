@@ -17,8 +17,8 @@ def test_cva_happy_path(page):
         application="CashApp",
         environment="Prod",
         url="https://cashapp.savethechildren.net/",
-        country="Cashland",
-        project="AdminUAT1",
+        country="Niger CVA",
+        project="BMZ RESA Training",
         browser="Chromium"
     )
     login = LoginPage(page)
@@ -38,7 +38,7 @@ def test_cva_happy_path(page):
 
     # Country & Project Selection
     t = report.start()
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(10000)
     dashboard.select_country()
     page.wait_for_timeout(1000)
     dashboard.select_project()
