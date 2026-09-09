@@ -35,7 +35,7 @@ class UserRolePage:
 
 
     def profile(self, full_name, username, email, phone, image_path):
-        absolute_path = os.path.abspath(image_path)
+        absolute_path = os.path.abspath(image_path) #see the excel sheet for the image path
 
         self.settings.click()
         self.user_role.click()
